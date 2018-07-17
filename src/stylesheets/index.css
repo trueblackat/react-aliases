@@ -1,0 +1,41 @@
+:root {
+  --font-color: #d1d8e0;
+  --dark-color: #34495e;
+  --red-color: #c0392b;
+  --green-color: #16a085;
+
+  --transition: all 0.3s ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+  user-select: none;
+}
+
+body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  background: var(--dark-color);
+  color: var(--dark-color);
+}
+
+main {
+  height: 100vh;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.button {
+  text-align: center;
+  text-decoration: none;
+  background: var(--green-color);
+  border: none;
+  padding: 0;
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+  flex-shrink: 0;
+  font-size: 16px;
+}

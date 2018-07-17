@@ -1,0 +1,26 @@
+.teams {
+  padding: 15px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.teams .button {
+  margin-top: 15px;
+}
+
+.teams__items {
+  flex-grow: 1;
+}
+
+.teams__items .item {
+  text-align: left;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #bdc3c7;
+  font-size: 18px;
+  color: #2c3e50;
+}

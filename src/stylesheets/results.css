@@ -1,0 +1,32 @@
+.results {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: white;
+}
+
+.results__items {
+  flex-grow: 1;
+}
+
+.results .button {
+  margin-top: 15px;
+}
+
+.results__items .item {
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #bdc3c7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.results__items .item .team-score {
+  color: #e74c3c;
+  font-weight: bold;
+}

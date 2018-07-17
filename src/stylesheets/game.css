@@ -1,0 +1,52 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.game__counter {
+  height: 60px;
+  background: #9b59b6;
+}
+
+.word {
+  border-radius: 10px;
+  background: #a5b1c2;
+  overflow: hidden;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 20px;
+}
+
+.word__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  font-size: 34px;
+  padding: 20px;
+}
+
+.word__buttons {
+  display: flex;
+}
+
+.word__buttons button {
+  width: 50%;
+  border: none;
+  padding: 0;
+  padding: 20px;
+  color: white;
+}
+
+.word__pass-button {
+  background: var(--red-color);
+}
+
+.word__next-button {
+  background: var(--green-color);
+}
