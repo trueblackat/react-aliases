@@ -2,7 +2,9 @@
   "name": "alias",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://amir73911.github.io/react-aliases/build/",
   "dependencies": {
+    "gh-pages": "^1.2.0",
     "normalize-css": "^2.3.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -15,6 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   }
 }
