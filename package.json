@@ -2,7 +2,7 @@
   "name": "alias",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://amir73911.github.io/react-aliases/build/",
+  "homepage": "https://amir73911.github.io/react-aliases/",
   "dependencies": {
     "gh-pages": "^1.2.0",
     "normalize-css": "^2.3.1",
