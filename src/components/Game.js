@@ -15,10 +15,8 @@ class Game extends Component {
 
     this.innerProps = {
       recursionCounter: 0,
-      timeToRound: 5
+      timeToRound: 60
     }
-
-    if (!localStorage.answeredWords) localStorage.setItem('answeredWords', JSON.stringify([]));
 
     this.onPassClick = this.onPassClick.bind(this);
     this.onNextClick = this.onNextClick.bind(this);
@@ -61,16 +59,11 @@ class Game extends Component {
   }
 
   isWordAnswered(word) {
-    let answeredWords = JSON.parse(localStorage.answeredWords);
-
-    return answeredWords.includes(word);
+    return this.props.answeredWords.includes(word);
   }
 
   setWordAsAnswered(word) {
-    let answeredWords = JSON.parse(localStorage.answeredWords);
-
-    answeredWords.push(word);
-    localStorage.setItem('answeredWords', JSON.stringify(answeredWords));
+    this.props.onAnswerWord(word);
   }
 
   timer() {

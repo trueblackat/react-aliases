@@ -14,20 +14,22 @@ class App extends Component {
       teams: [
         {
           id: 0,
-          name: 'Крошки',
+          name: 'Пестики',
           points: 0
         },
         {
           id: 1,
-          name: 'Картошки',
+          name: 'Тычинки',
           points: 0
         }
       ],
+      answeredWords: [],
       activeTeamIndex: 0
     }
 
     this.saveResults = this.saveResults.bind(this);
     this.onAddTeam = this.onAddTeam.bind(this);
+    this.onAnswerWord = this.onAnswerWord.bind(this);
   }
 
   saveResults(points, teamIndex) {
@@ -47,15 +49,20 @@ class App extends Component {
     this.setState({ teams });
   }
 
-  render() {
-    let { teams, activeTeamIndex } = this.state;
+  onAnswerWord(word) {
+    let answeredWords = this.state.answeredWords;
+    answeredWords.push(word);
 
+    this.setState({ answeredWords });
+  }
+
+  render() {
     return (
       <Switch>
-        <Route exact path='/' render={(props) => <Main {...props} lastTeamIndex={activeTeamIndex} teams={teams}/> } />
-        <Route path='/teams' render={(props) => <Teams {...props} teams={teams} onAddTeam={this.onAddTeam} /> } />
-        <Route path='/results' render={(props) => <Results {...props} teams={teams} lastTeamIndex={activeTeamIndex} /> } />
-        <Route path='/game/:teamIndex' render={(props) => <Game {...props} setActiveTeamIndex={this.setActiveTeamIndex} onEnd={this.saveResults} teams={teams} /> } />
+        <Route exact path='/' render={(props) => <Main {...props} lastTeamIndex={this.activeTeamIndex} teams={this.state.teams}/> } />
+        <Route path='/teams' render={(props) => <Teams {...props} teams={this.state.teams} onAddTeam={this.onAddTeam} /> } />
+        <Route path='/results' render={(props) => <Results {...props} teams={this.state.teams} lastTeamIndex={this.state.activeTeamIndex} /> } />
+        <Route path='/game/:teamIndex' render={(props) => <Game {...props} setActiveTeamIndex={this.setActiveTeamIndex} onEnd={this.saveResults} onAnswerWord={this.onAnswerWord} answeredWords={this.state.answeredWords} teams={this.state.teams} /> } />
       </Switch>
     );
   }
