@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../stylesheets/game.css';
+import Message from './helpers/Message';
 import words from '../data/words';
 
 class Game extends Component {
@@ -10,13 +11,21 @@ class Game extends Component {
       points: 0,
       progress: 0,
       gameEnds: false,
+      gameStarts: false,
       activeWord: null
     }
 
     this.innerProps = {
       recursionCounter: 0,
-      timeToRound: 60
+      timeToRound: 60,
+      timeToReady: 5,
+      sounds: {
+        beep: new Audio('beep.m4a'),
+        ding: new Audio('ding.m4a')
+      }
     }
+
+    this.innerProps.sounds.beep.volume = 0.1;
 
     this.onPassClick = this.onPassClick.bind(this);
     this.onNextClick = this.onNextClick.bind(this);
@@ -66,6 +75,15 @@ class Game extends Component {
     this.props.onAnswerWord(word);
   }
 
+  preTimer() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.setState({ gameStarts: true });
+        resolve('go');
+      }, this.innerProps.timeToReady * 1000);
+    })
+  }
+
   timer() {
     let interval = 1000;
     let progressFragment = 100 / this.innerProps.timeToRound;
@@ -78,36 +96,51 @@ class Game extends Component {
       if (newProgress >= 100) {
         clearInterval(gameInterval);
         this.endGame();
+      } else {
+        this.innerProps.sounds.beep.play();
       }
+
     }, interval);
   }
 
   endGame() {
     this.setState({ gameEnds: true });
     this.props.onEnd(this.state.points, this.props.match.params.teamIndex);
-    this.props.history.push('/results');
+    this.innerProps.sounds.ding.play();
+    setTimeout(() => {
+      this.props.history.push('/results');
+    }, 1000);
   }
 
   componentDidMount() {
-    this.timer();
-    this.setRandomWord();
+    this.preTimer()
+      .then(result => {
+        this.timer();
+        this.setRandomWord();
+      });
   }
 
   render() {
-    const { progress, gameEnds, activeWord } = this.state;
+    const { progress, gameEnds, activeWord, gameStarts,  } = this.state;
+    const { teams, activeTeamIndex } = this.props;
+
+    let nextTeamIndex = (!!teams[activeTeamIndex + 1]) ? activeTeamIndex + 1 : 0;
+
+    let message = `Ход команды: ${teams[nextTeamIndex].name}`;
 
     return (
       <section className="game">
         <div className="game__counter" style={{'width': progress + '%'}}></div>
-        <div className="word">
+        {!gameStarts && <Message text={message} />}
+        {gameStarts && <div className="word">
           <div className="word__inner">
             <span>{activeWord}</span>
           </div>
           <div className="word__buttons">
             <button type="button" className="word__pass-button" disabled={gameEnds} onClick={this.onPassClick}>Пас...</button>
-            <button type="button" className="word__next-button" disabled={gameEnds} onClick={this.onNextClick}>Дальше!</button>
+            <button type="button" className="word__next-button" disabled={gameEnds} onClick={this.onNextClick}>Угадал!</button>
           </div>
-        </div>
+        </div>}
       </section>
     );
   }

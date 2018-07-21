@@ -26,6 +26,12 @@
   color: #2c3e50;
 }
 
+.results__items .item.winner {
+  font-size: 28px;
+  background: #857eb1 url('../images/salut.gif');
+  background-size: 200px;
+}
+
 .results__items .item .team-score {
   color: #e74c3c;
   font-weight: bold;

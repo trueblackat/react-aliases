@@ -23,6 +23,7 @@ class App extends Component {
           points: 0
         }
       ],
+      haveWinner: false,
       answeredWords: [],
       activeTeamIndex: 0
     }
@@ -30,6 +31,7 @@ class App extends Component {
     this.saveResults = this.saveResults.bind(this);
     this.onAddTeam = this.onAddTeam.bind(this);
     this.onAnswerWord = this.onAnswerWord.bind(this);
+    this.onHaveWinner = this.onHaveWinner.bind(this);
   }
 
   saveResults(points, teamIndex) {
@@ -56,13 +58,22 @@ class App extends Component {
     this.setState({ answeredWords });
   }
 
+  onHaveWinner() {
+    this.setState({ haveWinner: true });
+    this.restartGame();
+  }
+
+  restartGame() {
+    this.setState({ answeredWords: [] });
+  }
+
   render() {
     return (
       <Switch>
-        <Route exact path='/' render={(props) => <Main {...props} lastTeamIndex={this.activeTeamIndex} teams={this.state.teams}/> } />
+        <Route exact path='/' render={(props) => <Main {...props} lastTeamIndex={this.activeTeamIndex} teams={this.state.teams} haveWinner={this.state.haveWinner} /> } />
         <Route path='/teams' render={(props) => <Teams {...props} teams={this.state.teams} onAddTeam={this.onAddTeam} /> } />
-        <Route path='/results' render={(props) => <Results {...props} teams={this.state.teams} lastTeamIndex={this.state.activeTeamIndex} /> } />
-        <Route path='/game/:teamIndex' render={(props) => <Game {...props} setActiveTeamIndex={this.setActiveTeamIndex} onEnd={this.saveResults} onAnswerWord={this.onAnswerWord} answeredWords={this.state.answeredWords} teams={this.state.teams} /> } />
+        <Route path='/results' render={(props) => <Results {...props} teams={this.state.teams} lastTeamIndex={this.state.activeTeamIndex} onHaveWinner={this.onHaveWinner} /> } />
+        <Route path='/game/:teamIndex' render={(props) => <Game {...props} activeTeamIndex={this.state.activeTeamIndex} onEnd={this.saveResults} onAnswerWord={this.onAnswerWord} answeredWords={this.state.answeredWords} teams={this.state.teams} /> } />
       </Switch>
     );
   }

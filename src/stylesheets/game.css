@@ -39,8 +39,9 @@
   width: 50%;
   border: none;
   padding: 0;
-  padding: 20px;
+  padding: 30px 20px;
   color: white;
+  font-size: 24px;
 }
 
 .word__pass-button {
