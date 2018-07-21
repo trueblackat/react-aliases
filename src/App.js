@@ -23,6 +23,7 @@ class App extends Component {
           points: 0
         }
       ],
+      isNewGame: true,
       haveWinner: false,
       answeredWords: [],
       activeTeamIndex: 0
@@ -32,6 +33,8 @@ class App extends Component {
     this.onAddTeam = this.onAddTeam.bind(this);
     this.onAnswerWord = this.onAnswerWord.bind(this);
     this.onHaveWinner = this.onHaveWinner.bind(this);
+    this.setActiveTeamIndex = this.setActiveTeamIndex.bind(this);
+    this.restartGame = this.restartGame.bind(this);
   }
 
   saveResults(points, teamIndex) {
@@ -54,25 +57,32 @@ class App extends Component {
   onAnswerWord(word) {
     let answeredWords = this.state.answeredWords;
     answeredWords.push(word);
-
+    this.setIsNewGame(false);
     this.setState({ answeredWords });
   }
 
   onHaveWinner() {
     this.setState({ haveWinner: true });
-    this.restartGame();
   }
 
   restartGame() {
-    this.setState({ answeredWords: [] });
+    window.location.href="/";
+  }
+
+  setActiveTeamIndex(index) {
+    this.setState({ activeTeamIndex: index });
+  }
+
+  setIsNewGame(status) {
+    this.setState({ isNewGame: status });
   }
 
   render() {
     return (
       <Switch>
-        <Route exact path='/' render={(props) => <Main {...props} lastTeamIndex={this.activeTeamIndex} teams={this.state.teams} haveWinner={this.state.haveWinner} /> } />
+        <Route exact path='/' render={(props) => <Main {...props} lastTeamIndex={this.activeTeamIndex} teams={this.state.teams} isNewGame={this.state.isNewGame} haveWinner={this.state.haveWinner} /> } />
         <Route path='/teams' render={(props) => <Teams {...props} teams={this.state.teams} onAddTeam={this.onAddTeam} /> } />
-        <Route path='/results' render={(props) => <Results {...props} teams={this.state.teams} lastTeamIndex={this.state.activeTeamIndex} onHaveWinner={this.onHaveWinner} /> } />
+        <Route path='/results' render={(props) => <Results {...props} teams={this.state.teams} lastTeamIndex={this.state.activeTeamIndex} onHaveWinner={this.onHaveWinner} setActiveTeamIndex={this.setActiveTeamIndex} restartGame={this.restartGame} /> } />
         <Route path='/game/:teamIndex' render={(props) => <Game {...props} activeTeamIndex={this.state.activeTeamIndex} onEnd={this.saveResults} onAnswerWord={this.onAnswerWord} answeredWords={this.state.answeredWords} teams={this.state.teams} /> } />
       </Switch>
     );

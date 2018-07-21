@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import '../stylesheets/results.css';
 
 class Results extends Component {
@@ -11,10 +10,10 @@ class Results extends Component {
     }
 
     this.innerProps = {
-      winPointsCount: 30,
+      winPointsCount: 10,
       teams: this.props.teams,
       sounds: {
-        win: new Audio('win.m4a')
+        win: new Audio('resourses/sounds/win.m4a')
       }
     }
 
@@ -44,11 +43,13 @@ class Results extends Component {
   }
 
   startGame() {
+    this.props.setActiveTeamIndex(this.nextTeamIndex);
     this.props.history.push('/game/' + this.nextTeamIndex);
   }
 
   render() {
     let itemClassName = 'item';
+    let { restartGame } = this.props;
 
     return (
       <section className="results">
@@ -58,6 +59,8 @@ class Results extends Component {
             if (item.winner) {
               itemClassName = 'winner item';
               this.innerProps.sounds.win.play();
+            } else {
+              itemClassName = 'item';
             }
 
             return (
@@ -68,7 +71,7 @@ class Results extends Component {
             );
           })}
         </div>
-        <Link to="/" className="button">На главный экран</Link>
+        <button className="button" onClick={restartGame}>Начать новую игру</button>
         {!this.state.haveWinner && <button className="button" onClick={this.startGame}>Играть за {this.innerProps.teams[this.nextTeamIndex].name}</button>}
       </section>
     );

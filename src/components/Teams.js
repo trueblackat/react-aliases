@@ -15,7 +15,8 @@ class Teams extends Component {
   }
 
   getRandomTeamName() {
-    let name = teamNames[Math.floor(Math.random() * teamNames.length)];
+    // TODO: иногда работает не правильно, разобраться
+    let name = teamNames[Math.floor(Math.random() * (teamNames.length - 1))];
     let names = [];
     let maxRecursionCalls = 100;
 
@@ -32,6 +33,7 @@ class Teams extends Component {
         console.error('Add moar team names!');
       }
     } else {
+      this.innerProps.recursionCounter = 0;
       return name;
     }
 

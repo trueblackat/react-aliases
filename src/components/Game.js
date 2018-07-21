@@ -17,11 +17,11 @@ class Game extends Component {
 
     this.innerProps = {
       recursionCounter: 0,
-      timeToRound: 60,
+      timeToRound: 10,
       timeToReady: 5,
       sounds: {
-        beep: new Audio('beep.m4a'),
-        ding: new Audio('ding.m4a')
+        beep: new Audio('resourses/sounds/beep.m4a'),
+        ding: new Audio('resourses/sounds/ding.m4a')
       }
     }
 
@@ -124,9 +124,7 @@ class Game extends Component {
     const { progress, gameEnds, activeWord, gameStarts,  } = this.state;
     const { teams, activeTeamIndex } = this.props;
 
-    let nextTeamIndex = (!!teams[activeTeamIndex + 1]) ? activeTeamIndex + 1 : 0;
-
-    let message = `Ход команды: ${teams[nextTeamIndex].name}`;
+    let message = `Ход команды: ${teams[activeTeamIndex].name}`;
 
     return (
       <section className="game">
